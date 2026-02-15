@@ -74,8 +74,8 @@ def create_docx(merged_text, output_file_name):
 
 if __name__ == '__main__':
 
-    subs_file = 'test.srt'
-    output_file = 'test.docx'
+    subs_file = 'example.srt'
+    output_file = 'example.docx'
 
     subs_merged = parse_srt(subs_file)
     create_docx(subs_merged, output_file)
