@@ -12,11 +12,10 @@ __pycache__/
 
 # Файлы субтитров
 *.srt
-*.txt
+!example.srt
 *.docx
+!example.docx
 downloads/
-output.txt
-subtitles.docx
 
 # Логи
 *.log
