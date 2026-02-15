@@ -1,0 +1,22 @@
+# Виртуальное окружение
+venv/
+env/
+ENV/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+
+# Файлы субтитров
+*.srt
+*.txt
+*.docx
+downloads/
+output.txt
+subtitles.docx
+
+# Логи
+*.log
