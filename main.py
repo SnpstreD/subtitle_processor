@@ -1,5 +1,24 @@
 import re
 from docx import Document
+from docx.enum.text import WD_COLOR_INDEX
+
+
+TURQUOISE_NAMES = ['МЭТТ', 'ТАЛЕСИН', 'ЛИАМ', 'СЭМ', 'ТРЭВИС']
+RED_NAMES = ['ЛОРА', 'МАРИША', 'ЭШЛИ']
+
+CHAR_COLORS = {
+    'МЭТТ': WD_COLOR_INDEX.YELLOW,
+    'ТАЛЕСИН': WD_COLOR_INDEX.VIOLET,
+    'ЛИАМ': WD_COLOR_INDEX.BLUE,
+    'СЭМ': WD_COLOR_INDEX.BRIGHT_GREEN,
+    'ТРЭВИС': WD_COLOR_INDEX.GREEN,
+
+    'ЛОРА': WD_COLOR_INDEX.PINK,
+    'МАРИША': WD_COLOR_INDEX.RED,
+    'ЭШЛИ': WD_COLOR_INDEX.TURQUOISE,
+}
+
+DEFAULT_COLOR = WD_COLOR_INDEX.GRAY_25
 
 
 def parse_srt(file_name):
@@ -35,7 +54,8 @@ def parse_srt(file_name):
             current = {
                 'time': match.group(1),
                 'person': match.group(2),
-                'text': match.group(3)
+                'text': match.group(3),
+                'color': CHAR_COLORS.get(match.group(2), DEFAULT_COLOR)
             }
 
         elif current:
@@ -65,8 +85,13 @@ def create_docx(merged_text, output_file_name):
 
     for entry in merged_text:
         row_cells = table.add_row().cells
+
         row_cells[0].text = entry['time']
-        row_cells[1].text = entry['person']
+
+        person_run = row_cells[1].paragraphs[0].add_run(entry['person'])
+        person_run.font.highlight_color = entry['color']
+        person_run.font.bold = True
+
         row_cells[2].text = entry['text']
 
     doc.save(output_file_name)
